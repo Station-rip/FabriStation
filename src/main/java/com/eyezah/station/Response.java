@@ -15,11 +15,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Response {
+class Response {
 
-	public static void request(String request, String command, ServerCommandSource source) throws ParseException, IOException {
+	public static void request(String request, String command) throws ParseException, IOException {
 		if (FabriStation.token.equals("")) {
-			FabriStation.error(source, "You're not connected to a Discord account.");
+			FabriStation.sendMessage("You're not connected to a Discord account.");
 		} else {
 			LOOKUP_THREAD.execute(() -> {
 				try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
@@ -31,13 +31,13 @@ public class Response {
 						String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
 						JsonParser parser = new JsonParser();
 						JsonObject jsonObject = parser.parse(responseBody).getAsJsonObject();
-						MusicResponses.send(command, jsonObject.get("type").getAsInt(), jsonObject.get("code"), source);
+						MusicResponses.send(command, jsonObject.get("type").getAsInt(), jsonObject.get("code"));
 						FabriStation.doneRequest();
 					}
 				} catch (IOException | CommandSyntaxException e) {
 					e.printStackTrace();
 					FabriStation.doneRequest();
-					FabriStation.error(source);
+					FabriStation.sendMessage("Couldn't connect to Station. Are you online?");
 				}
 			});
 		}

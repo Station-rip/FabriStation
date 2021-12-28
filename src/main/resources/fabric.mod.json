@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fabristation",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "name": "FabriStation",
   "description": "Fabric mod to control Station Discord music bot from Minecraft!",
@@ -13,7 +13,7 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/fabristation/icon.gif",
+  "icon": "assets/fabristation/icon.png",
 
   "environment": "*",
   "entrypoints": {

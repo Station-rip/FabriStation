@@ -9,9 +9,11 @@ import net.minecraft.network.MessageType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-public class MusicResponses {
+import static com.eyezah.station.FabriStation.sendMessage;
 
-	public static void send(String command, int type, JsonElement code, ServerCommandSource source) throws CommandSyntaxException {
+class MusicResponses {
+
+	public static void send(String command, int type, JsonElement code) throws CommandSyntaxException {
 
 		if (type == 0) {
 			String emsg = code.getAsString();
@@ -33,7 +35,7 @@ public class MusicResponses {
 			if (emsg.equals("rate limited")) {
 				if (command.equals("queue")) {
 					msg = "dontmessage";
-					send("queue", FabriStation.queueType, FabriStation.queueData, source);
+					send("queue", FabriStation.queueType, FabriStation.queueData);
 				} else {
 					msg = "This action was rate limited. Try again in a few seconds.";
 				}
@@ -55,10 +57,11 @@ public class MusicResponses {
 			if (emsg.equals("inactive") || emsg.equals("not in vc") || emsg.equals("wrong vc") || emsg.equals("no songs") || emsg.equals("invalid user token") || (emsg.equals("no queue") && !command.equals("shuffle"))) {
 				FabriStation.artist = "";
 				FabriStation.title = "";
+				FabriStation.isActive = false;
 			}
 			if (msg.equals("")) msg = "Something went wrong: " + emsg;
 
-			if (!msg.equals("dontmessage")) source.getPlayer().sendMessage(Text.of(msg), MessageType.SYSTEM, MinecraftClient.getInstance().player.getUuid());
+			if (!msg.equals("dontmessage")) sendMessage(msg);
 		} else {
 			String msg = "";
 
@@ -117,15 +120,17 @@ public class MusicResponses {
 				if (jsonArray.size() > 0) {
 					FabriStation.artist = jsonArray.get(0).getAsJsonObject().get("artist").getAsString();
 					FabriStation.title = jsonArray.get(0).getAsJsonObject().get("title").getAsString();
+					FabriStation.isActive = true;
 				} else {
 					FabriStation.artist = "";
 					FabriStation.title = "";
+					FabriStation.isActive = false;
 				}
 			}
 			if (msg.equals("")) {
-				source.getPlayer().sendMessage(Text.of("Success but unknown command: " + command), MessageType.SYSTEM, MinecraftClient.getInstance().player.getUuid());
+				sendMessage("Success but unknown command: " + command);
 			} else {
-				source.getPlayer().sendMessage(Text.of(msg), MessageType.SYSTEM, MinecraftClient.getInstance().player.getUuid());
+				sendMessage(msg);
 			}
 		}
 	}
