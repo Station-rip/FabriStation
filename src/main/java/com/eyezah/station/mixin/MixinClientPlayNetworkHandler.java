@@ -6,6 +6,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.util.telemetry.TelemetrySender;
 import net.minecraft.command.CommandSource;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.network.packet.s2c.play.CommandTreeS2CPacket;
@@ -25,7 +26,7 @@ class MixinClientPlayNetworkHandler {
 
 	@SuppressWarnings("unchecked")
 	@Inject(method = "<init>", at = @At("RETURN"))
-	public void onInit(MinecraftClient client, Screen screen, ClientConnection connection, GameProfile profile, CallbackInfo ci) {
+	public void onInit(MinecraftClient client, Screen screen, ClientConnection connection, GameProfile profile, TelemetrySender telemetrySender, CallbackInfo ci) {
 		FabriStation.registerCommands((CommandDispatcher<ServerCommandSource>) (Object) commandDispatcher);
 	}
 
