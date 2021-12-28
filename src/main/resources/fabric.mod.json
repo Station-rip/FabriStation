@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "fabristation",
+  "version": "1.0.0",
+
+  "name": "FabriStation",
+  "description": "Fabric mod to control Station Discord music bot from Minecraft!",
+  "authors": [
+    "eyezah"
+  ],
+  "contact": {
+    "homepage": "https://station.rip"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/fabristation/icon.gif",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.eyezah.station.FabriStation"
+    ]
+  },
+  "mixins": [
+    "fabristation.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric": "*"
+  }
+}
