@@ -8,7 +8,9 @@
   "client": [
     "MixinNowPlayingHud",
     "MixinClientPlayNetworkHandler",
-    "MixinClientPlayerEntity"
+    "MixinClientPlayerEntity",
+	"MixinDrawableHelperAccessor",
+	"MixinInGameHud"
   ],
   "injectors": {
     "defaultRequire": 1
