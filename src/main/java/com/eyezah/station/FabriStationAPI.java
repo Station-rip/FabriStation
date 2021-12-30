@@ -13,10 +13,10 @@ public class FabriStationAPI {
 		return FabriStation.line3;
 	}
 	public static boolean isActive() {
-		return isActive();
+		return FabriStation.isActive;
 	}
 	public static String getDiscordUsername() {
-		return "";
+		return FabriStation.discordName;
 	}
 	public static int runCommand(String[] parts) {
 		try {
